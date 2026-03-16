@@ -55,20 +55,20 @@ export function CreateOrganizationForm() {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
         <FormField
           control={form.control}
           name="name"
           render={({ field }: { field: any }) => (
             <FormItem>
-              <FormLabel>Organization Name</FormLabel>
+              <FormLabel className="text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground font-mono">Organization Name</FormLabel>
               <FormControl>
-                <Input placeholder="Acme Corp" {...field} disabled={isPending} />
+                <Input placeholder="ACME INDUSTRIAL" className="rounded-none border-2 h-11 focus:ring-0 focus:border-primary transition-all font-mono uppercase" {...field} disabled={isPending} />
               </FormControl>
-              <FormDescription>
-                This is the name of your team or company.
+              <FormDescription className="text-[10px] font-medium italic text-muted-foreground/60 font-mono">
+                The primary designation of your operational unit.
               </FormDescription>
-              <FormMessage />
+              <FormMessage className="text-[10px] uppercase font-bold font-mono" />
             </FormItem>
           )}
         />
@@ -77,21 +77,23 @@ export function CreateOrganizationForm() {
           name="slug"
           render={({ field }: { field: any }) => (
             <FormItem>
-              <FormLabel>URL Slug</FormLabel>
+              <FormLabel className="text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground font-mono">System Slug</FormLabel>
               <FormControl>
-                <Input placeholder="acme-corp" {...field} disabled={isPending} />
+                <Input placeholder="acme-industrial" className="rounded-none border-2 h-11 focus:ring-0 focus:border-primary transition-all font-mono text-primary/70" {...field} disabled={isPending} />
               </FormControl>
-              <FormDescription>
-                The URL for your organization (e.g., app.com/org-slug).
+              <FormDescription className="text-[10px] font-medium italic text-muted-foreground/60 font-mono">
+                The identifier used for technical indexing and URL routing.
               </FormDescription>
-              <FormMessage />
+              <FormMessage className="text-[10px] uppercase font-bold font-mono" />
             </FormItem>
           )}
         />
-        {error && <p className="text-sm font-medium text-destructive">{error}</p>}
-        <Button type="submit" className="w-full" disabled={isPending}>
-          {isPending ? "Creating organization..." : "Create organization"}
-        </Button>
+        {error && <p className="text-[11px] font-bold uppercase tracking-widest text-destructive bg-destructive/10 p-3 border border-destructive/20 font-mono">{error}</p>}
+        <div className="pt-6 border-t border-border/40">
+          <Button type="submit" className="w-full rounded-none h-12 text-xs font-bold uppercase tracking-[0.2em] font-mono border-2 border-primary shadow-[4px_4px_0px_0px_rgba(0,0,0,0.1)] hover:shadow-none hover:translate-x-[2px] hover:translate-y-[2px] transition-all" disabled={isPending}>
+            {isPending ? "INITIALIZING..." : "CREATE WORKSPACE_"}
+          </Button>
+        </div>
       </form>
     </Form>
   )
