@@ -58,66 +58,72 @@ export function TeamMemberList({ members, orgId, currentUserRole }: TeamMemberLi
   }
 
   return (
-    <div className="rounded-md border bg-white">
+    <div className="rounded-none border-2 border-border/40 bg-card/60 backdrop-blur-sm overflow-hidden shadow-sm font-mono">
       <Table>
-        <TableHeader>
-          <TableRow>
-            <TableHead>Member</TableHead>
-            <TableHead>Role</TableHead>
-            <TableHead>Joined</TableHead>
-            {canManage && <TableHead className="w-[100px]">Actions</TableHead>}
+        <TableHeader className="bg-muted/50">
+          <TableRow className="border-b-2 border-border/40 hover:bg-transparent">
+            <TableHead className="text-[10px] font-bold uppercase tracking-widest h-12">Member_Identifier</TableHead>
+            <TableHead className="text-[10px] font-bold uppercase tracking-widest h-12">Clearance_Role</TableHead>
+            <TableHead className="text-[10px] font-bold uppercase tracking-widest h-12">Registry_Date</TableHead>
+            {canManage && <TableHead className="w-[100px] text-[10px] font-bold uppercase tracking-widest h-12">Operations</TableHead>}
           </TableRow>
         </TableHeader>
         <TableBody>
           {members.map((member) => (
-            <TableRow key={member.id}>
-              <TableCell className="flex items-center gap-3">
-                <Avatar className="h-8 w-8">
-                  <AvatarImage src={member.profile?.avatar_url || ""} />
-                  <AvatarFallback className="bg-slate-100 text-xs text-slate-600">
-                    {member.profile?.full_name?.substring(0, 2).toUpperCase() || "??"}
-                  </AvatarFallback>
-                </Avatar>
-                <div className="flex flex-col">
-                  <span className="text-sm font-medium">{member.profile?.full_name}</span>
-                  <span className="text-xs text-muted-foreground">{member.profile?.email}</span>
+            <TableRow key={member.id} className="border-b border-border/20 hover:bg-muted/30 transition-colors group">
+              <TableCell className="py-4">
+                <div className="flex items-center gap-4">
+                  <Avatar className="h-10 w-10 border-2 border-border/40 rounded-none">
+                    <AvatarImage src={member.profile?.avatar_url || ""} className="grayscale group-hover:grayscale-0 transition-all" />
+                    <AvatarFallback className="bg-muted text-[10px] font-bold font-mono rounded-none">
+                      {member.profile?.full_name?.substring(0, 2).toUpperCase() || "??"}
+                    </AvatarFallback>
+                  </Avatar>
+                  <div className="flex flex-col">
+                    <span className="text-sm font-extrabold uppercase tracking-tight leading-none mb-1">{member.profile?.full_name}</span>
+                    <span className="text-[10px] font-bold text-muted-foreground/60">{member.profile?.email}</span>
+                  </div>
                 </div>
               </TableCell>
               <TableCell>
-                <Badge variant="secondary" className="capitalize">
+                <div className={cn(
+                  "inline-flex items-center px-2.5 py-0.5 border text-[10px] font-bold uppercase tracking-widest rounded-none",
+                  member.role === 'owner' ? "bg-primary/10 border-primary/30 text-primary" : "bg-muted border-border/40 text-muted-foreground"
+                )}>
                   {member.role}
-                </Badge>
+                </div>
               </TableCell>
-              <TableCell className="text-sm text-muted-foreground">
-                {format(new Date(member.joined_at), "MMM d, yyyy")}
+              <TableCell className="text-[11px] font-bold text-muted-foreground/80">
+                {format(new Date(member.joined_at), "yyyy-MM-dd HH:mm")}
               </TableCell>
               {canManage && (
                 <TableCell>
                   <DropdownMenu>
                     <DropdownMenuTrigger 
-                      className={cn(buttonVariants({ variant: "ghost" }), "h-8 w-8 p-0 focus:outline-none")}
+                      className={cn(buttonVariants({ variant: "ghost" }), "h-9 w-9 p-0 rounded-none border border-transparent hover:border-border/40 hover:bg-muted/50 focus:outline-none transition-all")}
                       disabled={isUpdating === member.id}
                     >
                       <MoreHorizontal className="h-4 w-4" />
                     </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end">
-                      <DropdownMenuItem onClick={() => handleUpdateRole(member.id, "admin")}>
-                        Make Admin
+                    <DropdownMenuContent align="end" className="rounded-none border-2 border-border/40 shadow-xl font-mono">
+                      <DropdownMenuItem className="text-[10px] font-bold uppercase tracking-widest focus:bg-primary focus:text-primary-foreground" onClick={() => handleUpdateRole(member.id, "admin")}>
+                        PROMOT_TO_ADMIN
                       </DropdownMenuItem>
-                      <DropdownMenuItem onClick={() => handleUpdateRole(member.id, "manager")}>
-                        Make Manager
+                      <DropdownMenuItem className="text-[10px] font-bold uppercase tracking-widest focus:bg-primary focus:text-primary-foreground" onClick={() => handleUpdateRole(member.id, "manager")}>
+                        SET_AS_MANAGER
                       </DropdownMenuItem>
-                      <DropdownMenuItem onClick={() => handleUpdateRole(member.id, "member")}>
-                        Make Member
+                      <DropdownMenuItem className="text-[10px] font-bold uppercase tracking-widest focus:bg-primary focus:text-primary-foreground" onClick={() => handleUpdateRole(member.id, "member")}>
+                        ASSIGN_MEMBER_ROLE
                       </DropdownMenuItem>
+                      <div className="h-px bg-border/40 my-1" />
                       <ConfirmDialog
                         trigger={
-                          <div className="relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors hover:bg-slate-100 text-red-600">
-                            Remove from Team
+                          <div className="relative flex cursor-pointer select-none items-center px-2 py-1.5 text-[10px] font-bold uppercase tracking-widest outline-none transition-colors hover:bg-destructive hover:text-destructive-foreground text-destructive">
+                            TERMINATE_MEMBERSHIP
                           </div>
                         }
-                        title="Remove Member"
-                        description="Are you sure you want to remove this member? They will lose all access to this organization."
+                        title="Confirm Termination"
+                        description="ARE YOU SURE YOU WANT TO REVOKE ACCESS FOR THIS OPERATIVE? THIS ACTION IS PERMANENT."
                         onConfirm={() => handleRemoveMember(member.id)}
                       />
                     </DropdownMenuContent>

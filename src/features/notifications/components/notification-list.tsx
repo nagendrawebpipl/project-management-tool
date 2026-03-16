@@ -48,54 +48,72 @@ export function NotificationList({ notifications }: NotificationListProps) {
   }
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-8">
       {unreadCount > 0 && (
         <div className="flex justify-end">
-          <Button variant="ghost" size="sm" onClick={handleMarkAllRead} className="text-xs text-muted-foreground hover:text-foreground">
+          <Button 
+            variant="outline" 
+            size="sm" 
+            onClick={handleMarkAllRead} 
+            className="text-[10px] font-bold uppercase tracking-widest font-mono border-2 h-9 px-6 rounded-none hover:bg-primary/10 transition-all"
+          >
             <CheckCheck className="h-4 w-4 mr-2" />
             Mark all as read
           </Button>
         </div>
       )}
-      <div className="space-y-2">
+      <div className="space-y-4">
         {items.map((notification) => (
           <div
             key={notification.id}
             className={cn(
-              "flex items-start gap-4 rounded-xl border p-4 transition-colors cursor-pointer hover:bg-accent/50",
-              !notification.is_read && "bg-blue-50 border-blue-100"
+              "flex items-start gap-5 rounded-none border-2 p-6 transition-all cursor-pointer relative group",
+              !notification.is_read 
+                ? "bg-primary/5 border-primary/30" 
+                : "bg-transparent border-border/40 hover:border-primary/20 hover:bg-muted/10"
             )}
             onClick={() => {
               if (!notification.is_read) handleMarkRead(notification.id)
             }}
           >
-            <div className="mt-1">
+            {!notification.is_read && (
+              <div className="absolute left-0 top-0 w-1.5 h-full bg-primary" />
+            )}
+            <div className="mt-1.5 flex-shrink-0">
               {notification.is_read ? (
-                <Circle className="h-2 w-2 fill-muted text-muted" />
+                <div className="h-2.5 w-2.5 rounded-full border-2 border-muted-foreground/30" />
               ) : (
-                <Circle className="h-2 w-2 fill-blue-500 text-blue-500" />
+                <div className="h-2.5 w-2.5 rounded-full bg-primary shadow-[0_0_8px_rgba(var(--primary),0.5)]" />
               )}
             </div>
             <div className="flex-1 min-w-0">
-              <p className={cn("text-sm font-semibold", !notification.is_read && "text-blue-900")}>
+              <p className={cn(
+                "text-lg font-extrabold tracking-tight mb-1 uppercase font-mono leading-none", 
+                !notification.is_read ? "text-primary" : "text-foreground/80"
+              )}>
                 {notification.title}
               </p>
-              <p className="text-sm text-muted-foreground mt-0.5 line-clamp-2">
+              <p className="text-sm font-medium text-muted-foreground leading-relaxed line-clamp-2">
                 {notification.content}
               </p>
-              <p className="text-xs text-muted-foreground mt-1">
-                {formatDistanceToNow(new Date(notification.created_at), { addSuffix: true })}
-              </p>
+              <div className="flex items-center gap-3 mt-4 pt-4 border-t border-border/20">
+                <span className="text-[10px] font-bold font-mono text-muted-foreground/50 uppercase tracking-[0.2em]">
+                  {formatDistanceToNow(new Date(notification.created_at), { addSuffix: true })}
+                </span>
+                {notification.link && (
+                  <>
+                    <div className="h-1 w-1 rounded-full bg-border/40" />
+                    <Link
+                      href={notification.link}
+                      className="text-[10px] font-bold font-mono text-primary uppercase tracking-[0.2em] hover:underline"
+                      onClick={(e) => e.stopPropagation()}
+                    >
+                      Access Entry_
+                    </Link>
+                  </>
+                )}
+              </div>
             </div>
-            {notification.link && (
-              <Link
-                href={notification.link}
-                className="text-xs text-blue-600 hover:underline whitespace-nowrap mt-1"
-                onClick={(e) => e.stopPropagation()}
-              >
-                View →
-              </Link>
-            )}
           </div>
         ))}
       </div>

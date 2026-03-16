@@ -21,18 +21,25 @@ export default async function OnboardingPage() {
   }
 
   return (
-    <div className="container flex h-screen w-screen flex-col items-center justify-center">
-      <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[450px]">
-        <Card className="border-none shadow-premium">
-          <CardHeader className="space-y-1">
-            <CardTitle className="text-2xl font-bold tracking-tight text-center">
-              Setup your workspace
-            </CardTitle>
-            <CardDescription className="text-center">
-              Create an organization to start managing your projects
+    <div className="flex h-screen w-screen flex-col items-center justify-center bg-background relative overflow-hidden">
+      <div className="absolute top-0 right-0 w-1/2 h-full bg-primary/5 -skew-x-12 translate-x-1/2" />
+      <div className="mx-auto flex w-full flex-col justify-center space-y-10 sm:w-[500px] relative z-10 p-4">
+        <div className="relative pl-6">
+          <div className="absolute left-0 top-0 w-1.5 h-full bg-primary/20 rounded-full" />
+          <h2 className="text-4xl font-extrabold tracking-tighter font-mono uppercase">Setup Workspace</h2>
+          <p className="text-sm font-bold uppercase tracking-[0.2em] text-muted-foreground/70 font-mono mt-3">
+            Initialize your project management core
+          </p>
+        </div>
+
+        <Card className="rounded-none border-2 border-border/40 bg-card/60 backdrop-blur-sm shadow-2xl overflow-hidden">
+          <CardHeader className="space-y-4 border-b border-border/40 p-10 bg-muted/20">
+            <CardTitle className="text-xl font-extrabold tracking-tighter uppercase font-mono">Create Organization</CardTitle>
+            <CardDescription className="text-sm font-medium leading-relaxed">
+              Define your organization to start managing systems, projects, and personnel.
             </CardDescription>
           </CardHeader>
-          <CardContent>
+          <CardContent className="p-10">
             <CreateOrganizationForm />
           </CardContent>
         </Card>
