@@ -39,3 +39,12 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# logs
+*.log
+typescript_errors*.log
+build_error*.log
+
+# temp
+pm-tool-temp/
+.temp/
