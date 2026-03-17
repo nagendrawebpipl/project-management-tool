@@ -58,72 +58,68 @@ export function TeamMemberList({ members, orgId, currentUserRole }: TeamMemberLi
   }
 
   return (
-    <div className="rounded-none border-2 border-border/40 bg-card/60 backdrop-blur-sm overflow-hidden shadow-sm font-mono">
+    <div className="rounded-none border border-border/60 bg-card/60 backdrop-blur-sm shadow-sm overflow-hidden">
       <Table>
-        <TableHeader className="bg-muted/50">
-          <TableRow className="border-b-2 border-border/40 hover:bg-transparent">
-            <TableHead className="text-[10px] font-bold uppercase tracking-widest h-12">Member_Identifier</TableHead>
-            <TableHead className="text-[10px] font-bold uppercase tracking-widest h-12">Clearance_Role</TableHead>
-            <TableHead className="text-[10px] font-bold uppercase tracking-widest h-12">Registry_Date</TableHead>
-            {canManage && <TableHead className="w-[100px] text-[10px] font-bold uppercase tracking-widest h-12">Operations</TableHead>}
+        <TableHeader className="bg-muted/30">
+          <TableRow className="hover:bg-transparent border-border/40">
+            <TableHead className="font-mono text-[10px] uppercase tracking-[0.2em] font-bold h-12">Member</TableHead>
+            <TableHead className="font-mono text-[10px] uppercase tracking-[0.2em] font-bold h-12">Role</TableHead>
+            <TableHead className="font-mono text-[10px] uppercase tracking-[0.2em] font-bold h-12">Joined</TableHead>
+            {canManage && <TableHead className="w-[100px] font-mono text-[10px] uppercase tracking-[0.2em] font-bold h-12">Actions</TableHead>}
           </TableRow>
         </TableHeader>
         <TableBody>
           {members.map((member) => (
-            <TableRow key={member.id} className="border-b border-border/20 hover:bg-muted/30 transition-colors group">
-              <TableCell className="py-4">
+            <TableRow key={member.id} className="border-border/40 hover:bg-muted/20 transition-colors">
+              <TableCell className="py-6">
                 <div className="flex items-center gap-4">
-                  <Avatar className="h-10 w-10 border-2 border-border/40 rounded-none">
-                    <AvatarImage src={member.profile?.avatar_url || ""} className="grayscale group-hover:grayscale-0 transition-all" />
-                    <AvatarFallback className="bg-muted text-[10px] font-bold font-mono rounded-none">
+                  <Avatar className="h-10 w-10 border border-border/40">
+                    <AvatarImage src={member.profile?.avatar_url || ""} />
+                    <AvatarFallback className="bg-slate-100 text-[10px] font-bold font-mono text-slate-600">
                       {member.profile?.full_name?.substring(0, 2).toUpperCase() || "??"}
                     </AvatarFallback>
                   </Avatar>
                   <div className="flex flex-col">
-                    <span className="text-sm font-extrabold uppercase tracking-tight leading-none mb-1">{member.profile?.full_name}</span>
-                    <span className="text-[10px] font-bold text-muted-foreground/60">{member.profile?.email}</span>
+                    <span className="text-base font-extrabold tracking-tight">{member.profile?.full_name}</span>
+                    <span className="text-xs text-muted-foreground/70 font-mono tracking-tight">{member.profile?.email}</span>
                   </div>
                 </div>
               </TableCell>
-              <TableCell>
-                <div className={cn(
-                  "inline-flex items-center px-2.5 py-0.5 border text-[10px] font-bold uppercase tracking-widest rounded-none",
-                  member.role === 'owner' ? "bg-primary/10 border-primary/30 text-primary" : "bg-muted border-border/40 text-muted-foreground"
-                )}>
+              <TableCell className="py-6">
+                <Badge variant="outline" className="capitalize font-mono text-xs border-2 px-2 py-0.5 rounded-none font-bold tracking-tight">
                   {member.role}
-                </div>
+                </Badge>
               </TableCell>
-              <TableCell className="text-[11px] font-bold text-muted-foreground/80">
-                {format(new Date(member.joined_at), "yyyy-MM-dd HH:mm")}
+              <TableCell className="text-sm font-bold font-mono text-muted-foreground/80 py-6 tracking-tight">
+                {format(new Date(member.joined_at), "MMM d, yyyy").toUpperCase()}
               </TableCell>
               {canManage && (
-                <TableCell>
+                <TableCell className="py-6">
                   <DropdownMenu>
                     <DropdownMenuTrigger 
-                      className={cn(buttonVariants({ variant: "ghost" }), "h-9 w-9 p-0 rounded-none border border-transparent hover:border-border/40 hover:bg-muted/50 focus:outline-none transition-all")}
+                      className={cn(buttonVariants({ variant: "ghost" }), "h-9 w-9 p-0 focus:outline-none hover:bg-muted/40 border border-transparent hover:border-border/40 transition-all")}
                       disabled={isUpdating === member.id}
                     >
-                      <MoreHorizontal className="h-4 w-4" />
+                      <MoreHorizontal className="h-5 w-5" />
                     </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end" className="rounded-none border-2 border-border/40 shadow-xl font-mono">
-                      <DropdownMenuItem className="text-[10px] font-bold uppercase tracking-widest focus:bg-primary focus:text-primary-foreground" onClick={() => handleUpdateRole(member.id, "admin")}>
-                        PROMOT_TO_ADMIN
+                    <DropdownMenuContent align="end" className="font-mono uppercase text-[10px] tracking-widest font-bold">
+                      <DropdownMenuItem onClick={() => handleUpdateRole(member.id, "admin")} className="cursor-pointer">
+                        Make Admin
                       </DropdownMenuItem>
-                      <DropdownMenuItem className="text-[10px] font-bold uppercase tracking-widest focus:bg-primary focus:text-primary-foreground" onClick={() => handleUpdateRole(member.id, "manager")}>
-                        SET_AS_MANAGER
+                      <DropdownMenuItem onClick={() => handleUpdateRole(member.id, "manager")} className="cursor-pointer">
+                        Make Manager
                       </DropdownMenuItem>
-                      <DropdownMenuItem className="text-[10px] font-bold uppercase tracking-widest focus:bg-primary focus:text-primary-foreground" onClick={() => handleUpdateRole(member.id, "member")}>
-                        ASSIGN_MEMBER_ROLE
+                      <DropdownMenuItem onClick={() => handleUpdateRole(member.id, "member")} className="cursor-pointer">
+                        Make Member
                       </DropdownMenuItem>
-                      <div className="h-px bg-border/40 my-1" />
                       <ConfirmDialog
                         trigger={
-                          <div className="relative flex cursor-pointer select-none items-center px-2 py-1.5 text-[10px] font-bold uppercase tracking-widest outline-none transition-colors hover:bg-destructive hover:text-destructive-foreground text-destructive">
-                            TERMINATE_MEMBERSHIP
+                          <div className="relative flex cursor-default select-none items-center px-2 py-1.5 outline-none transition-colors hover:bg-destructive/10 text-destructive">
+                            Remove from Team
                           </div>
                         }
-                        title="Confirm Termination"
-                        description="ARE YOU SURE YOU WANT TO REVOKE ACCESS FOR THIS OPERATIVE? THIS ACTION IS PERMANENT."
+                        title="Remove Member"
+                        description="Are you sure you want to remove this member? They will lose all access to this organization."
                         onConfirm={() => handleRemoveMember(member.id)}
                       />
                     </DropdownMenuContent>

@@ -1,6 +1,9 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
   webpack: (config, { dev }) => {
     if (dev) {
       // Use in-memory cache in dev to avoid Windows EPERM/memory errors

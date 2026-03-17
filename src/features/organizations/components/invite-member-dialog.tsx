@@ -59,33 +59,32 @@ export function InviteMemberDialog({ orgId }: InviteMemberDialogProps) {
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2">
-        <UserPlus className="mr-2 h-4 w-4" />
+      <DialogTrigger className="inline-flex items-center justify-center whitespace-nowrap rounded-none text-xs font-bold uppercase tracking-[0.2em] transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-11 px-8 py-2 font-mono border-2 border-primary shadow-[4px_4px_0px_0px_rgba(0,0,0,0.1)] hover:shadow-none hover:translate-x-[2px] hover:translate-y-[2px]">
+        <UserPlus className="mr-3 h-5 w-5" />
         Add Member
       </DialogTrigger>
-      <DialogContent>
-        <DialogHeader>
-          <DialogTitle>Add Team Member</DialogTitle>
-          <DialogDescription>
+      <DialogContent className="rounded-none border-2">
+        <DialogHeader className="space-y-4">
+          <DialogTitle className="text-2xl font-extrabold tracking-tighter uppercase font-mono">Add Team Member</DialogTitle>
+          <DialogDescription className="text-sm font-medium leading-relaxed">
             Enter the email address of the person you'd like to add to your team.
-            <br />
-            <span className="text-xs text-amber-600 font-medium">
-              Note: For MVP, users must already have an account.
-            </span>
           </DialogDescription>
+          <div className="mt-4 p-2 bg-amber-500/10 border border-amber-500/20 text-[10px] text-amber-600 font-bold uppercase tracking-widest font-mono">
+            Note: For MVP, users must already have an account.
+          </div>
         </DialogHeader>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 pt-4">
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 pt-4">
             <FormField
               control={form.control}
               name="email"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Email Address</FormLabel>
+                  <FormLabel className="text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground font-mono">Email Address</FormLabel>
                   <FormControl>
-                    <Input placeholder="user@example.com" {...field} />
+                    <Input placeholder="user@example.com" className="rounded-none border-2 focus:ring-0 focus:border-primary transition-all font-mono" {...field} />
                   </FormControl>
-                  <FormMessage />
+                  <FormMessage className="text-[10px] uppercase font-bold font-mono" />
                 </FormItem>
               )}
             />
@@ -94,25 +93,25 @@ export function InviteMemberDialog({ orgId }: InviteMemberDialogProps) {
               name="role"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Role</FormLabel>
+                  <FormLabel className="text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground font-mono">Role</FormLabel>
                   <Select onValueChange={field.onChange} defaultValue={field.value}>
                     <FormControl>
-                      <SelectTrigger>
+                      <SelectTrigger className="rounded-none border-2 h-11 focus:ring-0 transition-all font-mono uppercase text-xs font-bold tracking-widest">
                         <SelectValue placeholder="Select a role" />
                       </SelectTrigger>
                     </FormControl>
-                    <SelectContent>
+                    <SelectContent className="rounded-none border-2 font-mono uppercase text-[10px] font-bold tracking-widest">
                       <SelectItem value="admin">Admin</SelectItem>
                       <SelectItem value="manager">Manager</SelectItem>
                       <SelectItem value="member">Member</SelectItem>
                     </SelectContent>
                   </Select>
-                  <FormMessage />
+                  <FormMessage className="text-[10px] uppercase font-bold font-mono" />
                 </FormItem>
               )}
             />
-            <div className="flex justify-end pt-4">
-              <Button type="submit" disabled={isLoading}>
+            <div className="flex justify-end pt-6">
+              <Button type="submit" disabled={isLoading} className="rounded-none h-12 px-10 text-xs font-bold uppercase tracking-[0.2em] font-mono border-2 border-primary">
                 {isLoading ? "Adding..." : "Add Member"}
               </Button>
             </div>
