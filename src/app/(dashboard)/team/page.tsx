@@ -12,12 +12,13 @@ export default async function TeamPage() {
   const canManage = canManageMembers(role as UserRole)
 
   return (
-    <div className="space-y-8 pb-10">
+    <div className="space-y-10 pb-20 max-w-[1600px] mx-auto">
       <div className="flex items-center justify-between">
-        <div>
-          <h2 className="text-3xl font-bold tracking-tight">Team Management</h2>
-          <p className="text-muted-foreground">
-            View and manage the people who have access to <span className="font-semibold text-foreground">{organization.name}</span>.
+        <div className="relative pl-6">
+          <div className="absolute left-0 top-0 w-1.5 h-full bg-primary/20 rounded-full" />
+          <h2 className="text-4xl font-extrabold tracking-tighter font-mono uppercase">Team Management</h2>
+          <p className="text-sm font-bold uppercase tracking-[0.2em] text-muted-foreground/70 font-mono mt-3">
+            Manage permissions and access for <span className="text-primary">{organization.name}</span>
           </p>
         </div>
         {canManage && (
@@ -25,9 +26,9 @@ export default async function TeamPage() {
         )}
       </div>
 
-      <div className="space-y-4">
+      <div className="space-y-6">
         <div className="flex items-center justify-between">
-          <h3 className="text-lg font-medium">Members ({members.length})</h3>
+          <h3 className="text-sm font-bold uppercase tracking-[0.2em] text-muted-foreground/80 font-mono">Members ({members.length})</h3>
         </div>
         <TeamMemberList 
           members={members} 
