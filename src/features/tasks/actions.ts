@@ -28,7 +28,7 @@ export async function createTaskAction(projectId: string, values: TaskValues) {
     .eq("project_id", projectId)
     .order("position", { ascending: false })
     .limit(1)
-    .single() as any)
+    .maybeSingle() as any)
 
   const position = ((lastTask as any)?.position ?? 0) + 1000
 
@@ -79,7 +79,7 @@ export async function updateTaskAction(taskId: string, values: UpdateTaskValues)
     .from("tasks")
     .select("*")
     .eq("id", taskId)
-    .single()
+    .maybeSingle() as any
 
   const { data: task, error } = await (supabase
     .from("tasks")

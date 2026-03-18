@@ -14,7 +14,7 @@ export default async function OnboardingPage() {
     .select("organization_id")
     .eq("user_id", user.id)
     .limit(1)
-    .single()
+    .maybeSingle()
 
   if (membership) {
     redirect("/dashboard")

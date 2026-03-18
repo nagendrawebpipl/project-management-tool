@@ -95,7 +95,7 @@ export async function inviteMemberAction(orgId: string, values: InviteMemberValu
     .select("id")
     .eq("organization_id", orgId)
     .eq("user_id", userToAdd.id)
-    .single() as any)
+    .maybeSingle() as any)
 
   if (existing) {
     return { error: "User is already a member of this organization." }
