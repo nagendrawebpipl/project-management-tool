@@ -39,7 +39,7 @@ export function canDeleteProject(role: UserRole) {
 }
 
 export function canManageMembers(role: UserRole) {
-  return hasMinRole(role, "admin")
+  return hasMinRole(role, "manager")
 }
 
 // Task Permissions

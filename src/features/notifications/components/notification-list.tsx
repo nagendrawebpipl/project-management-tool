@@ -50,70 +50,72 @@ export function NotificationList({ notifications }: NotificationListProps) {
   return (
     <div className="space-y-8">
       {unreadCount > 0 && (
-        <div className="flex justify-end">
+        <div className="flex justify-end px-4">
           <Button 
             variant="outline" 
             size="sm" 
             onClick={handleMarkAllRead} 
-            className="text-[10px] font-bold uppercase tracking-widest font-mono border-2 h-9 px-6 rounded-none hover:bg-primary/10 transition-all"
+            className="h-10 px-6 rounded-2xl font-bold border-border/60 hover:bg-muted shadow-soft transition-all active:scale-95"
           >
-            <CheckCheck className="h-4 w-4 mr-2" />
+            <CheckCheck className="h-4 w-4 mr-2 stroke-[2.5px]" />
             Mark all as read
           </Button>
         </div>
       )}
-      <div className="space-y-4">
+      <div className="grid grid-cols-1 gap-2">
         {items.map((notification) => (
           <div
             key={notification.id}
             className={cn(
-              "flex items-start gap-5 rounded-none border-2 p-6 transition-all cursor-pointer relative group",
+              "flex items-start gap-6 rounded-2xl p-6 transition-all cursor-pointer relative group",
               !notification.is_read 
-                ? "bg-primary/5 border-primary/30" 
-                : "bg-transparent border-border/40 hover:border-primary/20 hover:bg-muted/10"
+                ? "bg-primary/5 hover:bg-primary/10" 
+                : "bg-transparent hover:bg-muted/10"
             )}
             onClick={() => {
               if (!notification.is_read) handleMarkRead(notification.id)
             }}
           >
-            {!notification.is_read && (
-              <div className="absolute left-0 top-0 w-1.5 h-full bg-primary" />
-            )}
             <div className="mt-1.5 flex-shrink-0">
               {notification.is_read ? (
-                <div className="h-2.5 w-2.5 rounded-full border-2 border-muted-foreground/30" />
+                <div className="h-3 w-3 rounded-full border-2 border-muted-foreground/30" />
               ) : (
-                <div className="h-2.5 w-2.5 rounded-full bg-primary shadow-[0_0_8px_rgba(var(--primary),0.5)]" />
+                <div className="h-3 w-3 rounded-full bg-primary shadow-[0_0_12px_rgba(var(--primary),0.5)]" />
               )}
             </div>
             <div className="flex-1 min-w-0">
-              <p className={cn(
-                "text-lg font-extrabold tracking-tight mb-1 uppercase font-mono leading-none", 
-                !notification.is_read ? "text-primary" : "text-foreground/80"
-              )}>
-                {notification.title}
-              </p>
-              <p className="text-sm font-medium text-muted-foreground leading-relaxed line-clamp-2">
-                {notification.content}
-              </p>
-              <div className="flex items-center gap-3 mt-4 pt-4 border-t border-border/20">
-                <span className="text-[10px] font-bold font-mono text-muted-foreground/50 uppercase tracking-[0.2em]">
+              <div className="flex items-center justify-between mb-1 gap-4">
+                <p className={cn(
+                  "text-lg font-bold tracking-tight leading-tight", 
+                  !notification.is_read ? "text-primary/90" : "text-foreground/80"
+                )}>
+                  {notification.title}
+                </p>
+                <span className="text-[11px] font-bold text-muted-foreground/40 whitespace-nowrap">
                   {formatDistanceToNow(new Date(notification.created_at), { addSuffix: true })}
                 </span>
-                {notification.link && (
-                  <>
-                    <div className="h-1 w-1 rounded-full bg-border/40" />
-                    <Link
-                      href={notification.link}
-                      className="text-[10px] font-bold font-mono text-primary uppercase tracking-[0.2em] hover:underline"
-                      onClick={(e) => e.stopPropagation()}
-                    >
-                      Access Entry_
-                    </Link>
-                  </>
-                )}
               </div>
+              <p className="text-sm font-medium text-muted-foreground/70 leading-relaxed line-clamp-2 pr-10">
+                {notification.content}
+              </p>
+              {notification.link && (
+                <div className="flex items-center gap-3 mt-4 pt-4 border-t border-border/10">
+                  <Link
+                    href={notification.link}
+                    className="flex items-center text-[11px] font-bold text-primary/80 uppercase tracking-widest hover:text-primary transition-colors group/link"
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    View Details
+                    <Bell className="ml-2 h-3 w-3 group-hover/link:animate-bounce" />
+                  </Link>
+                </div>
+              )}
             </div>
+            {!notification.is_read && (
+              <div className="absolute right-6 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity">
+                <div className="size-2 bg-primary rounded-full animate-pulse" />
+              </div>
+            )}
           </div>
         ))}
       </div>

@@ -33,7 +33,7 @@ export function KanbanColumn({ status, tasks, projectId }: KanbanColumnProps) {
   })
 
   return (
-    <div className="flex flex-col gap-4 min-w-[300px] w-full bg-muted/30 rounded-xl p-4 border h-full min-h-[500px]">
+    <div className="flex flex-col gap-5 min-w-[320px] w-full bg-muted/10 rounded-3xl p-5 border border-border/40 h-full min-h-[600px] shadow-soft">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
           <h3 className="font-semibold text-sm">{statusLabels[status]}</h3>
@@ -57,8 +57,8 @@ export function KanbanColumn({ status, tasks, projectId }: KanbanColumnProps) {
         </SortableContext>
         
         {tasks.length === 0 && (
-          <div className="flex-1 flex items-center justify-center border border-dashed rounded-lg min-h-[100px]">
-            <span className="text-xs text-muted-foreground">No tasks</span>
+          <div className="flex-1 flex flex-col items-center justify-center border-2 border-dashed border-muted/20 rounded-3xl bg-muted/5 min-h-[120px] transition-all">
+            <span className="text-[11px] font-semibold text-muted-foreground/40 uppercase tracking-widest">No tasks</span>
           </div>
         )}
       </div>

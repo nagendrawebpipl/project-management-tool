@@ -1,30 +1,30 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { cn } from "@/lib/utils"
 
-interface TasksByStatusWidgetProps {
+interface TasksByPriorityWidgetProps {
   counts: {
-    todo: number
-    in_progress: number
-    review: number
-    done: number
+    low: number
+    medium: number
+    high: number
+    urgent: number
   }
 }
 
-export function TasksByStatusWidget({ counts }: TasksByStatusWidgetProps) {
+export function TasksByPriorityWidget({ counts }: TasksByPriorityWidgetProps) {
   const total = Object.values(counts).reduce((a, b) => a + b, 0) || 1
   
   const stats = [
-    { label: "To Do", value: counts.todo, color: "bg-slate-200" },
-    { label: "In Progress", value: counts.in_progress, color: "bg-blue-500" },
-    { label: "Review", value: counts.review, color: "bg-amber-500" },
-    { label: "Done", value: counts.done, color: "bg-emerald-500" },
+    { label: "Low", value: counts.low, color: "bg-slate-200" },
+    { label: "Medium", value: counts.medium, color: "bg-blue-400" },
+    { label: "High", value: counts.high, color: "bg-amber-400" },
+    { label: "Urgent", value: counts.urgent, color: "bg-rose-500" },
   ]
 
   return (
     <Card className="h-full border border-border/40 bg-card shadow-soft rounded-3xl overflow-hidden group">
       <CardHeader className="pb-4 pt-8 px-8">
         <CardTitle className="text-xl font-bold tracking-tight text-foreground/90">
-          Tasks by Status
+          Tasks by Priority
         </CardTitle>
       </CardHeader>
       <CardContent className="px-8 pb-10 space-y-7">

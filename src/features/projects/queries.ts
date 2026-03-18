@@ -15,14 +15,19 @@ export async function getProjects(organizationId: string) {
 
 export async function getProject(id: string) {
   const supabase = await createClient()
-  const { data, error } = await supabase
-    .from("projects")
-    .select("*, created_by_profile:profiles!projects_created_by_fkey(*)")
-    .eq("id", id)
-    .single()
+  try {
+    const { data, error } = await supabase
+      .from("projects")
+      .select("*, created_by_profile:profiles!projects_created_by_fkey(*)")
+      .eq("id", id)
+      .single()
 
-  if (error) throw error
-  return data
+    if (error) throw error
+    return data
+  } catch (error: any) {
+    console.error("getProject query error:", error)
+    return null
+  }
 }
 
 export async function getProjectMembers(projectId: string) {

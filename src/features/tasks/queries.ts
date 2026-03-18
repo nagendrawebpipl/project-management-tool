@@ -2,26 +2,36 @@ import { createClient } from "@/lib/supabase/server"
 
 export async function getTasksByProject(projectId: string) {
   const supabase = await createClient()
-  const { data, error } = await supabase
-    .from("tasks")
-    .select("*, assignee:profiles!tasks_assignee_id_fkey(*), reporter:profiles!tasks_reporter_id_fkey(*)")
-    .eq("project_id", projectId)
-    .order("position", { ascending: true })
+  try {
+    const { data, error } = await supabase
+      .from("tasks")
+      .select("*, assignee:profiles!tasks_assignee_id_fkey(*), reporter:profiles!tasks_reporter_id_fkey(*)")
+      .eq("project_id", projectId)
+      .order("position", { ascending: true })
 
-  if (error) throw error
-  return data
+    if (error) throw error
+    return data
+  } catch (error: any) {
+    console.error("getTasksByProject query error:", error)
+    return []
+  }
 }
 
 export async function getTask(taskId: string) {
   const supabase = await createClient()
-  const { data, error } = await supabase
-    .from("tasks")
-    .select("*, assignee:profiles!tasks_assignee_id_fkey(*), reporter:profiles!tasks_reporter_id_fkey(*), project:projects(*)")
-    .eq("id", taskId)
-    .single()
+  try {
+    const { data, error } = await supabase
+      .from("tasks")
+      .select("*, assignee:profiles!tasks_assignee_id_fkey(*), reporter:profiles!tasks_reporter_id_fkey(*), project:projects(*)")
+      .eq("id", taskId)
+      .single()
 
-  if (error) throw error
-  return data
+    if (error) throw error
+    return data
+  } catch (error: any) {
+    console.error("getTask query error:", error)
+    return null
+  }
 }
 
 export async function getTasksByProjectGroupedByStatus(projectId: string) {

@@ -26,27 +26,27 @@ export function Header() {
   }
 
   return (
-    <div className="flex items-center px-4 md:px-6 border-b h-16 bg-background/80 backdrop-blur-md sticky top-0 z-40 justify-between">
+    <div className="flex items-center px-6 md:px-10 border-b h-20 bg-background/80 backdrop-blur-md sticky top-0 z-40 justify-between shadow-sm">
       <div className="flex items-center">
         <MobileSidebar />
       </div>
-      <div className="flex items-center gap-x-4">
+      <div className="flex items-center gap-x-6">
         <ThemeToggle />
         <NotificationBell />
         <DropdownMenu>
           <DropdownMenuTrigger className="focus:outline-none">
-            <Avatar className="cursor-pointer h-9 w-9">
+            <Avatar className="cursor-pointer h-10 w-10 border-2 border-background shadow-sm hover:scale-105 transition-transform">
               <AvatarImage src="" />
-              <AvatarFallback className="bg-slate-100">
-                <Users className="h-4 w-4 text-slate-600" />
+              <AvatarFallback className="bg-muted text-muted-foreground font-bold">
+                <Users className="h-5 w-5" />
               </AvatarFallback>
             </Avatar>
           </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuItem onClick={() => router.push("/settings")}>
+          <DropdownMenuContent align="end" className="w-48 p-2 rounded-xl">
+            <DropdownMenuItem onClick={() => router.push("/settings")} className="rounded-lg p-2.5 font-medium">
               Settings
             </DropdownMenuItem>
-            <DropdownMenuItem onClick={handleLogout}>
+            <DropdownMenuItem onClick={handleLogout} className="rounded-lg p-2.5 font-medium text-destructive focus:text-destructive">
               Logout
             </DropdownMenuItem>
           </DropdownMenuContent>

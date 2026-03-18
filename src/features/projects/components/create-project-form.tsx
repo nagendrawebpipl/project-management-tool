@@ -59,16 +59,16 @@ export function CreateProjectForm({ onSuccess }: { onSuccess?: () => void }) {
           control={form.control}
           name="name"
           render={({ field }) => (
-            <FormItem>
-              <FormLabel className="text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground/80 font-mono">Project Name</FormLabel>
+            <FormItem className="space-y-2">
+              <FormLabel className="text-sm font-semibold text-foreground/80 pl-1">Project Name</FormLabel>
               <FormControl>
                 <Input 
                   placeholder="e.g., Marketing Website" 
-                  className="rounded-none border-t-0 border-x-0 border-b focus-visible:ring-0 focus-visible:border-primary transition-all px-0" 
+                  className="rounded-2xl border-border bg-muted/20 h-12 px-5 focus-visible:ring-primary/10 transition-all text-base font-medium" 
                   {...field} 
                 />
               </FormControl>
-              <FormMessage className="text-[10px] uppercase font-mono tracking-wider" />
+              <FormMessage className="text-xs font-medium pl-1" />
             </FormItem>
           )}
         />
@@ -77,24 +77,24 @@ export function CreateProjectForm({ onSuccess }: { onSuccess?: () => void }) {
           control={form.control}
           name="description"
           render={({ field }) => (
-            <FormItem>
-              <FormLabel className="text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground/80 font-mono">Description</FormLabel>
+            <FormItem className="space-y-2">
+              <FormLabel className="text-sm font-semibold text-foreground/80 pl-1">Description</FormLabel>
               <FormControl>
                 <Textarea 
                   placeholder="Describe the goals and scope of this project..." 
-                  className="resize-none rounded-sm border-muted-foreground/20 focus-visible:ring-primary/20 transition-all min-h-[120px]" 
+                  className="resize-none rounded-2xl border-border bg-muted/20 focus-visible:ring-primary/10 transition-all min-h-[140px] p-5 text-base font-medium" 
                   {...field} 
                 />
               </FormControl>
-              <FormMessage className="text-[10px] uppercase font-mono tracking-wider" />
+              <FormMessage className="text-xs font-medium pl-1" />
             </FormItem>
           )}
         />
 
-        <div className="flex justify-end pt-4">
-          <Button type="submit" disabled={isPending}>
+        <div className="flex justify-end pt-6">
+          <Button type="submit" disabled={isPending} className="w-full h-12 rounded-2xl font-bold text-base shadow-premium transition-all hover:scale-[1.01] active:scale-[0.99]">
             {isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-            Create Project
+            {isPending ? "Creating Project..." : "Create Project"}
           </Button>
         </div>
       </form>

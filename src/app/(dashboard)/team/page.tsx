@@ -12,29 +12,33 @@ export default async function TeamPage() {
   const canManage = canManageMembers(role as UserRole)
 
   return (
-    <div className="space-y-10 pb-20 max-w-[1600px] mx-auto">
+    <div className="space-y-12 pb-20 max-w-[1600px] mx-auto px-4 sm:px-0">
       <div className="flex items-center justify-between">
         <div className="relative pl-6">
-          <div className="absolute left-0 top-0 w-1.5 h-full bg-primary/20 rounded-full" />
-          <h2 className="text-4xl font-extrabold tracking-tighter font-mono uppercase">Team Management</h2>
-          <p className="text-sm font-bold uppercase tracking-[0.2em] text-muted-foreground/70 font-mono mt-3">
-            Manage permissions and access for <span className="text-primary">{organization.name}</span>
+          <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1.5 h-10 bg-primary rounded-full shadow-[0_0_15px_rgba(var(--primary),0.3)]" />
+          <h1 className="text-4xl font-extrabold tracking-tight text-foreground/90 font-sans">Team Management</h1>
+          <p className="text-sm font-semibold text-muted-foreground/60 mt-2">
+            Manage permissions and access for <span className="text-primary/80 font-bold">{organization.name}</span>
           </p>
         </div>
         {canManage && (
-          <InviteMemberDialog orgId={organization.id} />
+          <div className="bg-card p-1 rounded-2xl shadow-soft border border-border/40">
+            <InviteMemberDialog orgId={organization.id} />
+          </div>
         )}
       </div>
 
       <div className="space-y-6">
-        <div className="flex items-center justify-between">
-          <h3 className="text-sm font-bold uppercase tracking-[0.2em] text-muted-foreground/80 font-mono">Members ({members.length})</h3>
+        <div className="flex items-center justify-between px-2">
+          <h3 className="text-xs font-bold text-muted-foreground/40 uppercase tracking-[0.2em] pl-1">Members ({members.length})</h3>
         </div>
-        <TeamMemberList 
-          members={members} 
-          orgId={organization.id} 
-          currentUserRole={role} 
-        />
+        <div className="rounded-3xl border border-border/40 bg-card shadow-soft overflow-hidden">
+          <TeamMemberList 
+            members={members} 
+            orgId={organization.id} 
+            currentUserRole={role} 
+          />
+        </div>
       </div>
     </div>
   )

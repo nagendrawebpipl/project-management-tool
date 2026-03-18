@@ -19,8 +19,10 @@ export async function getCurrentOrganization() {
     .maybeSingle()
 
   if (error) {
-    console.error("DEBUG: getCurrentOrganization error:", error);
-    throw new Error(`Failed to fetch organization membership: ${error.message} (Code: ${error.code})`);
+    console.error("getCurrentOrganization query error:", error)
+    // If the query fails (e.g. table doesn't exist yet or connection issue), 
+    // treat it as no organization to avoid crashing the whole dashboard.
+    redirect("/onboarding")
   }
 
   if (!membership) {

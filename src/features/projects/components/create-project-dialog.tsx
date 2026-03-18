@@ -19,9 +19,9 @@ export function CreateProjectDialog() {
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger className={cn(buttonVariants({ variant: "default" }), "h-8 px-2.5 focus:outline-none")}>
-        <Plus className="mr-2 h-4 w-4" />
-        New Project
+      <DialogTrigger className={cn(buttonVariants({ variant: "default", size: "lg" }), "h-11 px-6 rounded-2xl shadow-premium hover:scale-[1.02] active:scale-[0.98] transition-all")}>
+        <Plus className="mr-2 h-5 w-5 stroke-[2.5px]" />
+        <span className="font-bold">New Project</span>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[500px]">
         <DialogHeader>

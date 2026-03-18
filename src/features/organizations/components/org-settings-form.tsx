@@ -47,21 +47,24 @@ export function OrgSettingsForm({ organization, isAdmin }: OrgSettingsFormProps)
 
   if (!isAdmin) {
     return (
-      <Card className="rounded-none border-2 bg-card/60 backdrop-blur-sm shadow-sm overflow-hidden">
-        <CardHeader className="space-y-4 border-b border-border/40 p-10 bg-muted/20">
-          <CardTitle className="text-2xl font-extrabold tracking-tighter uppercase font-mono">Organization Settings</CardTitle>
-          <CardDescription className="text-sm font-medium leading-relaxed">
+      <Card className="rounded-3xl border-border/40 bg-card shadow-soft overflow-hidden">
+        <CardHeader className="space-y-4 border-b border-border/10 p-10 bg-muted/5">
+          <CardTitle className="text-2xl font-bold tracking-tight text-foreground/90">Organization Settings</CardTitle>
+          <CardDescription className="text-sm font-medium leading-relaxed text-muted-foreground/60">
             View your organization's configuration.
           </CardDescription>
         </CardHeader>
         <CardContent className="p-10">
           <div className="space-y-10">
-            <div>
-              <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground font-mono mb-2">Organization Name</p>
-              <p className="text-xl font-extrabold font-mono uppercase">{organization.name}</p>
+            <div className="space-y-2">
+              <p className="text-sm font-bold text-foreground/80 pl-1 uppercase tracking-wider">Organization Name</p>
+              <p className="text-2xl font-extrabold tracking-tight pl-1">{organization.name}</p>
             </div>
-            <div className="p-6 bg-amber-500/10 border-2 border-amber-500/30 text-[11px] text-amber-600 font-bold uppercase tracking-[0.2em] font-mono leading-loose">
-              <span className="text-amber-700 block mb-1">PROTECTED VIEW</span>
+            <div className="p-8 bg-amber-500/5 border border-amber-500/20 rounded-2xl text-sm text-amber-600/80 font-medium leading-relaxed shadow-inner">
+              <div className="flex items-center gap-2 mb-2">
+                <div className="size-2 bg-amber-500 rounded-full animate-pulse" />
+                <span className="font-bold text-amber-700 uppercase tracking-widest text-[10px]">Protected View</span>
+              </div>
               Only organization owners and admins have the clearance to modify these technical settings.
             </div>
           </div>
@@ -71,10 +74,10 @@ export function OrgSettingsForm({ organization, isAdmin }: OrgSettingsFormProps)
   }
 
   return (
-    <Card className="rounded-none border-2 bg-card/60 backdrop-blur-sm shadow-sm overflow-hidden">
-      <CardHeader className="space-y-4 border-b border-border/40 p-10 bg-muted/20">
-        <CardTitle className="text-2xl font-extrabold tracking-tighter uppercase font-mono">Organization Settings</CardTitle>
-        <CardDescription className="text-sm font-medium leading-relaxed">
+    <Card className="rounded-3xl border-border/40 bg-card shadow-soft overflow-hidden">
+      <CardHeader className="space-y-4 border-b border-border/10 p-10 bg-muted/5">
+        <CardTitle className="text-2xl font-bold tracking-tight text-foreground/90">Organization Settings</CardTitle>
+        <CardDescription className="text-sm font-medium leading-relaxed text-muted-foreground/60">
           Manage your organization's public profile and operational settings.
         </CardDescription>
       </CardHeader>
@@ -85,17 +88,17 @@ export function OrgSettingsForm({ organization, isAdmin }: OrgSettingsFormProps)
               control={form.control}
               name="name"
               render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground font-mono">Organization Name</FormLabel>
+                <FormItem className="space-y-2">
+                  <FormLabel className="text-sm font-bold text-foreground/80 pl-1">Organization Name</FormLabel>
                   <FormControl>
-                    <Input placeholder="Acme Inc." className="rounded-none border-2 h-11 focus:ring-0 focus:border-primary transition-all font-mono" {...field} />
+                    <Input placeholder="Acme Inc." className="rounded-2xl border-border/60 h-12 focus:ring-primary/20 transition-all font-medium" {...field} />
                   </FormControl>
-                  <FormMessage className="text-[10px] uppercase font-bold font-mono" />
+                  <FormMessage className="text-xs font-bold text-destructive/80 pl-1" />
                 </FormItem>
               )}
             />
-            <div className="flex justify-end pt-6 border-t border-border/40">
-              <Button type="submit" disabled={isLoading} className="rounded-none h-12 px-12 text-xs font-bold uppercase tracking-[0.2em] font-mono border-2 border-primary shadow-[4px_4px_0px_0px_rgba(0,0,0,0.1)] hover:shadow-none hover:translate-x-[2px] hover:translate-y-[2px] transition-all">
+            <div className="flex justify-end pt-8 border-t border-border/10">
+              <Button type="submit" disabled={isLoading} className="rounded-2xl h-12 px-10 text-sm font-bold shadow-soft transition-all active:scale-95 hover:scale-[1.02]">
                 {isLoading ? "Saving..." : "Save Changes"}
               </Button>
             </div>

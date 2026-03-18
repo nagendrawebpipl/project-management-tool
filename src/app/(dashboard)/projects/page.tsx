@@ -10,12 +10,12 @@ export default async function ProjectsPage() {
 
   return (
     <div className="space-y-10 pb-20 max-w-[1600px] mx-auto">
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between px-2">
         <div className="relative pl-6">
-          <div className="absolute left-0 top-0 w-1.5 h-full bg-primary/20 rounded-full" />
-          <h2 className="text-4xl font-extrabold tracking-tighter font-mono uppercase">Projects</h2>
-          <p className="text-sm font-bold uppercase tracking-[0.2em] text-muted-foreground/70 font-mono mt-3">
-            Manage and track projects for <span className="text-primary">{organization.name}</span>
+          <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1.5 h-8 bg-primary rounded-full shadow-[0_0_15px_rgba(var(--primary),0.3)]" />
+          <h2 className="text-4xl font-bold tracking-tight text-foreground">Projects</h2>
+          <p className="text-sm font-medium text-muted-foreground/80 mt-1">
+            Build and manage your <span className="text-primary/90 font-semibold">{organization.name}</span> projects.
           </p>
         </div>
         {canCreateProject(role) && <CreateProjectDialog />}

@@ -24,12 +24,13 @@ export default async function BoardPage({ params }: BoardPageProps) {
   }
 
   return (
-    <div className="h-full space-y-4">
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-2xl font-bold">{(project as any).name} - Board</h1>
-          <p className="text-sm text-muted-foreground">
-            Drag and drop tasks to manage your workflow optimally.
+    <div className="h-full space-y-10 pb-10">
+      <div className="flex items-center justify-between px-2">
+        <div className="relative pl-6">
+          <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1.5 h-8 bg-primary rounded-full shadow-[0_0_15px_rgba(var(--primary),0.3)]" />
+          <h1 className="text-4xl font-bold tracking-tight text-foreground">{(project as any).name}</h1>
+          <p className="text-sm font-medium text-muted-foreground/80 mt-1">
+            Manage your <span className="text-primary/90 font-semibold">Workflow</span> and track task progress.
           </p>
         </div>
       </div>

@@ -47,10 +47,10 @@ export function ProfileSettingsForm({ user }: ProfileSettingsFormProps) {
   }
 
   return (
-    <Card className="rounded-none border-2 bg-card/60 backdrop-blur-sm shadow-sm overflow-hidden">
-      <CardHeader className="space-y-4 border-b border-border/40 p-10 bg-muted/20">
-        <CardTitle className="text-2xl font-extrabold tracking-tighter uppercase font-mono">Profile Settings</CardTitle>
-        <CardDescription className="text-sm font-medium leading-relaxed">
+    <Card className="rounded-3xl border-border/40 bg-card shadow-soft overflow-hidden">
+      <CardHeader className="space-y-4 border-b border-border/10 p-10 bg-muted/5">
+        <CardTitle className="text-2xl font-bold tracking-tight text-foreground/90">Profile Settings</CardTitle>
+        <CardDescription className="text-sm font-medium leading-relaxed text-muted-foreground/60">
           Update your personal information and how others see you on the platform.
         </CardDescription>
       </CardHeader>
@@ -61,12 +61,12 @@ export function ProfileSettingsForm({ user }: ProfileSettingsFormProps) {
               control={form.control}
               name="fullName"
               render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground font-mono">Full Name</FormLabel>
+                <FormItem className="space-y-2">
+                  <FormLabel className="text-sm font-bold text-foreground/80 pl-1">Full Name</FormLabel>
                   <FormControl>
-                    <Input placeholder="John Doe" className="rounded-none border-2 h-11 focus:ring-0 focus:border-primary transition-all font-mono" {...field} />
+                    <Input placeholder="John Doe" className="rounded-2xl border-border/60 h-12 focus:ring-primary/20 transition-all font-medium" {...field} />
                   </FormControl>
-                  <FormMessage className="text-[10px] uppercase font-bold font-mono" />
+                  <FormMessage className="text-xs font-bold text-destructive/80 pl-1" />
                 </FormItem>
               )}
             />
@@ -74,20 +74,20 @@ export function ProfileSettingsForm({ user }: ProfileSettingsFormProps) {
               control={form.control}
               name="avatarUrl"
               render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground font-mono">Avatar URL</FormLabel>
+                <FormItem className="space-y-2">
+                  <FormLabel className="text-sm font-bold text-foreground/80 pl-1">Avatar URL</FormLabel>
                   <FormControl>
-                    <Input placeholder="https://example.com/avatar.png" className="rounded-none border-2 h-11 focus:ring-0 focus:border-primary transition-all font-mono" {...field} />
+                    <Input placeholder="https://example.com/avatar.png" className="rounded-2xl border-border/60 h-12 focus:ring-primary/20 transition-all font-medium" {...field} />
                   </FormControl>
-                  <FormDescription className="text-xs font-medium italic text-muted-foreground/60">
+                  <FormDescription className="text-xs font-medium text-muted-foreground/50 pl-1">
                     Provide a direct link to a public image for your profile picture.
                   </FormDescription>
-                  <FormMessage className="text-[10px] uppercase font-bold font-mono" />
+                  <FormMessage className="text-xs font-bold text-destructive/80 pl-1" />
                 </FormItem>
               )}
             />
-            <div className="flex justify-end pt-6 border-t border-border/40">
-              <Button type="submit" disabled={isLoading} className="rounded-none h-12 px-12 text-xs font-bold uppercase tracking-[0.2em] font-mono border-2 border-primary shadow-[4px_4px_0px_0px_rgba(0,0,0,0.1)] hover:shadow-none hover:translate-x-[2px] hover:translate-y-[2px] transition-all">
+            <div className="flex justify-end pt-8 border-t border-border/10">
+              <Button type="submit" disabled={isLoading} className="rounded-2xl h-12 px-10 text-sm font-bold shadow-soft transition-all active:scale-95 hover:scale-[1.02]">
                 {isLoading ? "Saving..." : "Save Changes"}
               </Button>
             </div>
