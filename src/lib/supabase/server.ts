@@ -5,9 +5,14 @@ import type { Database } from "@/types/database.types"
 export async function createClient() {
   const cookieStore = await cookies()
 
+  if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
+    console.error("CRITICAL: Supabase environment variables are missing! Check Vercel settings.")
+    throw new Error("Supabase configuration is missing. Please check the environment variables.")
+  }
+
   return createServerClient<Database>(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    process.env.NEXT_PUBLIC_SUPABASE_URL,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
     {
       cookies: {
         getAll() {
