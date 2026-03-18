@@ -10,7 +10,8 @@ import { TaskArea } from "@/features/tasks/components/task-area"
 import { KanbanBoard } from "@/features/tasks/components/kanban/kanban-board"
 import { LayoutDashboard } from "lucide-react"
 import Link from "next/link"
-import { Button } from "@/components/ui/button"
+import { Button, buttonVariants } from "@/components/ui/button"
+import { cn } from "@/lib/utils"
 import { Card } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
@@ -44,12 +45,16 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
           canDelete={canDeleteProject(userRole)} 
         />
         <div className="shrink-0">
-          <Button variant="outline" size="sm" className="h-11 px-6 rounded-2xl font-bold border-border/60 hover:bg-muted shadow-soft transition-all hover:scale-[1.02] active:scale-[0.98]" render={(props: any) => (
-            <Link href={`/projects/${projectId}/board`} {...props}>
-              <LayoutDashboard className="h-5 w-5 mr-3 text-primary stroke-[2.5px]" />
-              Fullscreen Board
-            </Link>
-          )} />
+          <Link 
+            href={`/projects/${projectId}/board`} 
+            className={cn(
+              buttonVariants({ variant: "outline", size: "sm" }),
+              "h-11 px-6 rounded-2xl font-bold border-border/60 hover:bg-muted shadow-soft transition-all hover:scale-[1.02] active:scale-[0.98]"
+            )}
+          >
+            <LayoutDashboard className="h-5 w-5 mr-3 text-primary stroke-[2.5px]" />
+            Fullscreen Board
+          </Link>
         </div>
       </div>
 
