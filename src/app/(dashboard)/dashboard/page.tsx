@@ -1,4 +1,5 @@
 import { getCurrentOrganization } from "@/lib/auth/get-organization"
+export const dynamic = "force-dynamic"
 import { getAuthUser } from "@/lib/auth/get-user"
 import { 
   getDashboardStats,

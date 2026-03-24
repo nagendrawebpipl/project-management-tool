@@ -1,4 +1,5 @@
 import { getCurrentOrganization } from "@/lib/auth/get-organization"
+export const dynamic = "force-dynamic"
 import { getProjects } from "@/features/projects/queries"
 import { ProjectList } from "@/features/projects/components/project-list"
 import { CreateProjectDialog } from "@/features/projects/components/create-project-dialog"

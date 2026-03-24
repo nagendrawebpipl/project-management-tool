@@ -1,4 +1,5 @@
 import { getCurrentOrganization } from "@/lib/auth/get-organization"
+export const dynamic = "force-dynamic"
 import { getProject } from "@/features/projects/queries"
 import { getTasksByProject } from "@/features/tasks/queries"
 import { getOrganizationMembers } from "@/features/organizations/queries"

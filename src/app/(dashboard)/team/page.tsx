@@ -1,4 +1,5 @@
 import { getCurrentOrganization } from "@/lib/auth/get-organization"
+export const dynamic = "force-dynamic"
 import { getOrganizationMembers } from "@/features/organizations/queries"
 import { TeamMemberList } from "@/features/organizations/components/team-member-list"
 import { InviteMemberDialog } from "@/features/organizations/components/invite-member-dialog"
