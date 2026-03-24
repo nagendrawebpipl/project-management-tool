@@ -36,7 +36,7 @@ export function CommentForm({ taskId, projectId }: CommentFormProps) {
         form.reset()
         toast.success("Comment added")
       }
-    } catch (error) {
+    } catch (_error) {
       toast.error("An unexpected error occurred")
     } finally {
       setIsPending(false)

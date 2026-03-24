@@ -12,7 +12,7 @@ export function ProjectList({ projects }: ProjectListProps) {
       <EmptyState
         icon={Briefcase}
         title="No projects found"
-        description="You haven't created any projects yet. Start by creating your first project to manage your tasks."
+        description="You haven&apos;t created any projects yet. Start by creating your first project to manage your tasks."
         className="min-h-[400px]"
       />
     )

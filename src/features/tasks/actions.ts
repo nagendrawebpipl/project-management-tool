@@ -4,7 +4,7 @@ import { revalidatePath } from "next/cache"
 import { createClient } from "@/lib/supabase/server"
 import { getCurrentOrganization } from "@/lib/auth/get-organization"
 import { canCreateTask, canEditTask, canDeleteTask } from "@/lib/permissions"
-import { taskSchema, updateTaskSchema, moveTaskSchema, type TaskValues, type UpdateTaskValues, type MoveTaskValues } from "./schemas"
+import { taskSchema, updateTaskSchema, type TaskValues, type UpdateTaskValues, type MoveTaskValues } from "./schemas"
 import { logActivity } from "@/features/activity/actions"
 
 export async function createTaskAction(projectId: string, values: TaskValues) {
@@ -138,7 +138,7 @@ export async function deleteTaskAction(taskId: string, projectId: string) {
 }
 
 export async function moveTaskAction(values: MoveTaskValues) {
-  const { user, organizationId, role } = await getCurrentOrganization()
+  const { user: _user, organizationId, role } = await getCurrentOrganization()
 
   if (!canEditTask(role)) {
     return { error: "Unauthorized" }

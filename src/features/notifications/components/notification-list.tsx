@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import { formatDistanceToNow } from "date-fns"
-import { Bell, CheckCheck, Circle } from "lucide-react"
+import { Bell, CheckCheck } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 import { markNotificationReadAction, markAllNotificationsReadAction } from "../actions"
@@ -41,7 +41,7 @@ export function NotificationList({ notifications }: NotificationListProps) {
       <EmptyState
         icon={Bell}
         title="No notifications"
-        description="You're all caught up! We'll let you know when something new happens."
+        description="You&apos;re all caught up! We&apos;ll let you know when something new happens."
         className="py-16"
       />
     )

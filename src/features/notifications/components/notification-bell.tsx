@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect, useState, useCallback } from "react"
 import { Bell } from "lucide-react"
 import { createClient } from "@/lib/supabase/client"
 import Link from "next/link"
@@ -8,6 +8,19 @@ import Link from "next/link"
 export function NotificationBell() {
   const [count, setCount] = useState(0)
   const supabase = createClient()
+
+  const fetchUnreadCount = useCallback(async () => {
+    const { data: { user } } = await supabase.auth.getUser()
+    if (!user) return
+
+    const { count } = await supabase
+      .from("notifications")
+      .select("*", { count: "exact", head: true })
+      .eq("user_id", user.id)
+      .eq("is_read", false)
+
+    setCount(count ?? 0)
+  }, [supabase])
 
   useEffect(() => {
     fetchUnreadCount()
@@ -31,20 +44,7 @@ export function NotificationBell() {
     return () => {
       supabase.removeChannel(channel)
     }
-  }, [])
-
-  async function fetchUnreadCount() {
-    const { data: { user } } = await supabase.auth.getUser()
-    if (!user) return
-
-    const { count } = await supabase
-      .from("notifications")
-      .select("*", { count: "exact", head: true })
-      .eq("user_id", user.id)
-      .eq("is_read", false)
-
-    setCount(count ?? 0)
-  }
+  }, [fetchUnreadCount, supabase])
 
   return (
     <Link

@@ -72,7 +72,7 @@ export function InviteMemberDialog({ orgId }: InviteMemberDialogProps) {
           <DialogHeader className="space-y-4">
             <DialogTitle className="text-3xl font-bold tracking-tight text-foreground/90">Add Team Member</DialogTitle>
             <DialogDescription className="text-sm font-medium text-muted-foreground/60 leading-relaxed">
-              Enter the email address of the person you'd like to add to your team.
+              Enter the email address of the person you&apos;d like to add to your team.
             </DialogDescription>
             <div className="p-4 bg-primary/5 border border-primary/10 rounded-2xl text-[11px] text-primary/80 font-bold uppercase tracking-widest flex items-center gap-3">
               <div className="size-2 bg-primary rounded-full animate-pulse" />

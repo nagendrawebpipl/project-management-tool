@@ -51,7 +51,7 @@ export function OrgSettingsForm({ organization, isAdmin }: OrgSettingsFormProps)
         <CardHeader className="space-y-4 border-b border-border/10 p-10 bg-muted/5">
           <CardTitle className="text-2xl font-bold tracking-tight text-foreground/90">Organization Settings</CardTitle>
           <CardDescription className="text-sm font-medium leading-relaxed text-muted-foreground/60">
-            View your organization's configuration.
+            View your organization&apos;s configuration.
           </CardDescription>
         </CardHeader>
         <CardContent className="p-10">
@@ -78,7 +78,7 @@ export function OrgSettingsForm({ organization, isAdmin }: OrgSettingsFormProps)
       <CardHeader className="space-y-4 border-b border-border/10 p-10 bg-muted/5">
         <CardTitle className="text-2xl font-bold tracking-tight text-foreground/90">Organization Settings</CardTitle>
         <CardDescription className="text-sm font-medium leading-relaxed text-muted-foreground/60">
-          Manage your organization's public profile and operational settings.
+          Manage your organization&apos;s public profile and operational settings.
         </CardDescription>
       </CardHeader>
       <CardContent className="p-10">

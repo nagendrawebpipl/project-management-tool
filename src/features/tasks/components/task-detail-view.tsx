@@ -51,14 +51,13 @@ export function TaskDetailView({
     canDelete 
 }: TaskDetailViewProps) {
   const router = useRouter()
-  const [isUpdating, setIsUpdating] = useState(false)
+
   const [isDeleting, setIsDeleting] = useState(false)
   const [title, setTitle] = useState(task.title)
   const [description, setDescription] = useState(task.description || "")
 
   async function handleUpdateTitle() {
     if (!canEdit || title === task.title) return
-    setIsUpdating(true)
     try {
       const result = await updateTaskAction(task.id, { title })
       if (result.error) {
@@ -68,13 +67,11 @@ export function TaskDetailView({
         toast.success("Title updated")
       }
     } finally {
-      setIsUpdating(false)
     }
   }
 
   async function handleUpdateDescription() {
     if (!canEdit || description === (task.description || "")) return
-    setIsUpdating(true)
     try {
       const result = await updateTaskAction(task.id, { description })
       if (result.error) {
@@ -84,7 +81,6 @@ export function TaskDetailView({
         toast.success("Description updated")
       }
     } finally {
-      setIsUpdating(false)
     }
   }
 
@@ -116,12 +112,14 @@ export function TaskDetailView({
         
         {canDelete && (
           <AlertDialog>
-            <AlertDialogTrigger>
-              <Button variant="ghost" size="sm" className="text-destructive hover:text-destructive hover:bg-destructive/10">
-                <Trash2 className="h-4 w-4 mr-2" />
-                Delete Task
-              </Button>
-            </AlertDialogTrigger>
+            <AlertDialogTrigger
+              render={
+                <Button variant="ghost" size="sm" className="text-destructive hover:text-destructive hover:bg-destructive/10">
+                  <Trash2 className="h-4 w-4 mr-2" />
+                  Delete Task
+                </Button>
+              }
+            />
             <AlertDialogContent>
               <AlertDialogHeader>
                 <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>

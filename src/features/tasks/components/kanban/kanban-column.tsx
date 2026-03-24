@@ -33,20 +33,20 @@ export function KanbanColumn({ status, tasks, projectId }: KanbanColumnProps) {
   })
 
   return (
-    <div className="flex flex-col gap-5 min-w-[320px] w-full bg-muted/10 rounded-3xl p-5 border border-border/40 h-full min-h-[600px] shadow-soft">
-      <div className="flex items-center justify-between">
+    <div className="flex flex-col rounded-xl border bg-muted/40 min-h-0">
+      {/* Column header */}
+      <div className="flex items-center justify-between p-3 border-b shrink-0">
+        <span className="font-medium text-sm">{statusLabels[status]}</span>
         <div className="flex items-center gap-2">
-          <h3 className="font-semibold text-sm">{statusLabels[status]}</h3>
-          <span className="bg-muted text-muted-foreground text-[10px] px-2 py-0.5 rounded-full font-bold">
-            {tasks.length}
-          </span>
+          <span className="text-xs text-muted-foreground">{tasks.length}</span>
+          <Button variant="ghost" size="icon-sm" className="h-6 w-6">
+            <Plus className="w-4 h-4" />
+          </Button>
         </div>
-        <Button variant="ghost" size="icon-sm" className="h-6 w-6">
-          <Plus className="h-4 w-4" />
-        </Button>
       </div>
 
-      <div ref={setNodeRef} className="flex-1 flex flex-col gap-3">
+      {/* Tasks drop area */}
+      <div ref={setNodeRef} className="flex-1 overflow-y-auto p-2 flex flex-col gap-2">
         <SortableContext
           items={tasks.map((t) => t.id)}
           strategy={verticalListSortingStrategy}
@@ -55,10 +55,10 @@ export function KanbanColumn({ status, tasks, projectId }: KanbanColumnProps) {
             <KanbanCard key={task.id} task={task} projectId={projectId} />
           ))}
         </SortableContext>
-        
+
         {tasks.length === 0 && (
-          <div className="flex-1 flex flex-col items-center justify-center border-2 border-dashed border-muted/20 rounded-3xl bg-muted/5 min-h-[120px] transition-all">
-            <span className="text-[11px] font-semibold text-muted-foreground/40 uppercase tracking-widest">No tasks</span>
+          <div className="flex-1 rounded-lg border-2 border-dashed border-muted-foreground/20 flex items-center justify-center min-h-[120px]">
+            <p className="text-xs text-muted-foreground">NO TASKS</p>
           </div>
         )}
       </div>

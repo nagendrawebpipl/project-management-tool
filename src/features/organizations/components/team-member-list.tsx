@@ -1,24 +1,22 @@
 "use client"
 
-import { 
-  Table, 
-  TableBody, 
-  TableCell, 
-  TableHead, 
-  TableHeader, 
-  TableRow 
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow
 } from "@/components/ui/table"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
-import { Button, buttonVariants } from "@/components/ui/button"
 import { MoreHorizontal } from "lucide-react"
-import { 
-  DropdownMenu, 
-  DropdownMenuContent, 
-  DropdownMenuItem, 
-  DropdownMenuTrigger 
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu"
-import { cn } from "@/lib/utils"
 import { format } from "date-fns"
 import { updateMemberRoleAction, removeMemberAction } from "../actions"
 import { toast } from "sonner"
@@ -97,9 +95,13 @@ export function TeamMemberList({ members, orgId, currentUserRole }: TeamMemberLi
               {canManage && (
                 <TableCell className="py-6 pr-8 text-right">
                   <DropdownMenu>
-                    <DropdownMenuTrigger 
-                      className={cn(buttonVariants({ variant: "ghost" }), "h-10 w-10 p-0 rounded-2xl hover:bg-muted/40 transition-all active:scale-95 border border-transparent hover:border-border/20")}
-                      disabled={isUpdating === member.id}
+                    <DropdownMenuTrigger
+                      render={
+                        <button
+                          className="h-10 w-10 inline-flex items-center justify-center rounded-2xl hover:bg-muted/40 transition-all active:scale-95 border border-transparent hover:border-border/20 disabled:opacity-50 cursor-pointer"
+                          disabled={isUpdating === member.id}
+                        />
+                      }
                     >
                       <MoreHorizontal className="h-5 w-5 text-muted-foreground/60" />
                     </DropdownMenuTrigger>

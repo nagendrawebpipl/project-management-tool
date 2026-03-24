@@ -10,7 +10,8 @@ import { TaskArea } from "@/features/tasks/components/task-area"
 import { KanbanBoard } from "@/features/tasks/components/kanban/kanban-board"
 import { LayoutDashboard } from "lucide-react"
 import Link from "next/link"
-import { Button, buttonVariants } from "@/components/ui/button"
+
+import { buttonVariants } from "@/components/ui/button-variants"
 import { cn } from "@/lib/utils"
 import { Card } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -37,7 +38,7 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
   }
 
   return (
-    <div className="space-y-10 pb-20">
+    <div className="flex flex-col h-full overflow-hidden">
       <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 px-2">
         <ProjectHeader 
           project={project} 
@@ -58,8 +59,8 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
         </div>
       </div>
 
-      <Tabs defaultValue="tasks" className="space-y-10">
-        <div className="px-2">
+      <Tabs defaultValue="tasks" className="flex flex-col flex-1 overflow-hidden">
+        <div className="px-2 shrink-0">
           <TabsList className="bg-muted/10 p-1.5 rounded-[1.5rem] border border-border/40 h-auto gap-1">
             <TabsTrigger value="tasks" className="rounded-2xl px-6 py-2.5 font-bold data-[state=active]:bg-background data-[state=active]:shadow-soft data-[state=active]:text-primary transition-all">Tasks</TabsTrigger>
             <TabsTrigger value="board" className="rounded-2xl px-6 py-2.5 font-bold data-[state=active]:bg-background data-[state=active]:shadow-soft data-[state=active]:text-primary transition-all">Board</TabsTrigger>
@@ -69,7 +70,7 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
           </TabsList>
         </div>
 
-        <TabsContent value="tasks" className="outline-none">
+        <TabsContent value="tasks" className="flex-1 overflow-y-auto outline-none px-2 pb-10">
           <TaskArea
             tasks={tasks as any}
             members={members as any}
@@ -78,13 +79,13 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
           />
         </TabsContent>
 
-        <TabsContent value="board" className="h-[calc(100vh-350px)] outline-none">
-          <div className="h-full rounded-3xl overflow-hidden border border-border/40 bg-muted/5 p-4 shadow-soft">
+        <TabsContent value="board" className="flex-1 overflow-hidden outline-none">
+          <div className="h-full w-full p-4">
             <KanbanBoard initialTasks={tasks} projectId={projectId} />
           </div>
         </TabsContent>
 
-        <TabsContent value="overview" className="outline-none">
+        <TabsContent value="overview" className="flex-1 overflow-y-auto outline-none px-2 pb-10">
           <Card className="rounded-3xl border-border/40 shadow-soft p-10 bg-card overflow-hidden relative group">
             <div className="absolute top-0 left-0 w-2 h-full bg-primary/10 group-hover:bg-primary transition-all" />
             <h3 className="text-2xl font-bold mb-6 tracking-tight text-foreground/90">About this project</h3>
@@ -94,7 +95,7 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
           </Card>
         </TabsContent>
 
-        <TabsContent value="members" className="outline-none">
+        <TabsContent value="members" className="flex-1 overflow-y-auto outline-none px-2 pb-10">
           <Card className="rounded-3xl border-border/40 shadow-soft p-10 bg-card">
             <h3 className="text-2xl font-bold mb-8 tracking-tight text-foreground/90">Project Members</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -121,7 +122,7 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
           </Card>
         </TabsContent>
 
-        <TabsContent value="activity" className="outline-none">
+        <TabsContent value="activity" className="flex-1 overflow-y-auto outline-none px-2 pb-10">
           <Card className="rounded-3xl border-border/40 shadow-soft p-10 bg-card">
             <h3 className="text-2xl font-bold mb-8 tracking-tight text-foreground/90">Project Activity</h3>
             <div className="bg-muted/10 rounded-[2rem] p-20 text-center border-2 border-dashed border-border/40 transition-all hover:bg-muted/20 group">
@@ -129,7 +130,7 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
                 <LayoutDashboard className="size-8 text-muted-foreground/40" />
               </div>
               <p className="text-base font-bold text-muted-foreground/60 tracking-tight">Activity timeline implementation coming soon</p>
-              <p className="text-sm font-medium text-muted-foreground/40 mt-1">We're building something great for you.</p>
+              <p className="text-sm font-medium text-muted-foreground/40 mt-1">We&apos;re building something great for you.</p>
             </div>
           </Card>
         </TabsContent>

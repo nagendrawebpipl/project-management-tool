@@ -16,16 +16,43 @@ export async function getProjects(organizationId: string) {
 export async function getProject(id: string) {
   const supabase = await createClient()
   try {
-    const { data, error } = await supabase
+    // Attempt join first
+    const { data: joinedData, error: joinError } = await supabase
       .from("projects")
       .select("*, created_by_profile:profiles!projects_created_by_fkey(*)")
       .eq("id", id)
       .single()
 
-    if (error) throw error
-    return data
+    if (!joinError) return joinedData
+
+    // Fallback if join fails due to missing relationship
+    console.warn("getProject join failed, attempting manual fetch:", joinError.message)
+    const { data: project, error: projectError } = await supabase
+      .from("projects")
+      .select("*")
+      .eq("id", id)
+      .single()
+
+    if (projectError) throw projectError
+
+    const { data: profile } = await supabase
+      .from("profiles")
+      .select("*")
+      .eq("id", (project as any).created_by)
+      .single()
+
+    return {
+      ...(project as any),
+      created_by_profile: profile || null,
+    }
   } catch (error: any) {
-    console.error("getProject query error:", error)
+    console.error("getProject query error details:", {
+      message: error.message,
+      details: error.details,
+      hint: error.hint,
+      code: error.code
+    })
+    console.error("getProject catch block:", error)
     return null
   }
 }

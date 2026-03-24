@@ -15,7 +15,7 @@ import { AssigneePicker } from "./assignee-picker"
 import { updateTaskAction } from "../actions"
 import { toast } from "sonner"
 import { format } from "date-fns"
-import { CalendarIcon, Loader2 } from "lucide-react"
+import { Loader2 } from "lucide-react"
 
 interface MetadataSidebarProps {
   task: any
@@ -36,7 +36,7 @@ export function MetadataSidebar({ task, members, canEdit }: MetadataSidebarProps
       } else {
         toast.success("Updated")
       }
-    } catch (error) {
+    } catch (_error) {
       toast.error("Failed to update")
     } finally {
       setIsUpdating(false)

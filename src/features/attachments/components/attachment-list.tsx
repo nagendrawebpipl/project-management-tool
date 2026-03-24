@@ -26,7 +26,7 @@ export function AttachmentList({ attachments, currentUserId, projectId }: Attach
       } else {
         toast.success("Attachment deleted")
       }
-    } catch (error) {
+    } catch (_error) {
       toast.error("Failed to delete attachment")
     } finally {
       setIsDeleting(null)

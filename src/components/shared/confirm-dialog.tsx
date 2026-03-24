@@ -1,5 +1,6 @@
 "use client"
 
+import React from "react"
 import {
   AlertDialog,
   AlertDialogAction,
@@ -11,11 +12,10 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
-import { Button } from "@/components/ui/button"
 import { Loader2 } from "lucide-react"
 
 interface ConfirmDialogProps {
-  trigger: React.ReactNode
+  trigger: React.ReactElement
   title: string
   description: string
   onConfirm: () => Promise<void>
@@ -33,7 +33,11 @@ export function ConfirmDialog({
 }: ConfirmDialogProps) {
   return (
     <AlertDialog>
-      <AlertDialogTrigger className="focus:outline-none">
+      <AlertDialogTrigger
+        render={
+          <button className="w-full text-left" />
+        }
+      >
         {trigger}
       </AlertDialogTrigger>
       <AlertDialogContent>

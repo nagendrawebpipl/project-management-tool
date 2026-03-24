@@ -100,7 +100,7 @@ export function KanbanBoard({ tasks: initialTasks, projectId }: KanbanBoardProps
     if (!over) return
 
     const activeId = active.id
-    const overId = over.id
+    const _overId = over.id
 
     const activeIndex = tasks.findIndex((t) => t.id === activeId)
     const task = tasks[activeIndex]
@@ -129,7 +129,7 @@ export function KanbanBoard({ tasks: initialTasks, projectId }: KanbanBoardProps
       onDragOver={onDragOver}
       onDragEnd={onDragEnd}
     >
-      <div className="flex gap-x-6 overflow-x-auto pb-6 scrollbar-thin scrollbar-thumb-muted-foreground/20 scrollbar-track-transparent">
+      <div className="flex gap-x-4 pb-6 h-full">
         {TASK_STATUSES.map((status) => (
           <KanbanColumn
             key={status.value}

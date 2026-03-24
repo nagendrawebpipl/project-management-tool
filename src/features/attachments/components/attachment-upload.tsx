@@ -42,7 +42,7 @@ export function AttachmentUpload({ taskId, projectId }: AttachmentUploadProps) {
         setFile(null)
         router.refresh()
       }
-    } catch (error) {
+    } catch (_error) {
       toast.error("An unexpected error occurred")
     } finally {
       setIsUploading(false)

@@ -133,7 +133,7 @@ export function KanbanBoard({ initialTasks, projectId }: KanbanBoardProps) {
       .filter((t) => t.status === (overTask?.status || overColumn || activeTask.status))
       .sort((a, b) => a.position - b.position)
 
-    const activeIndexInCol = columnTasks.findIndex((t) => t.id === activeId)
+    const _activeIndexInCol = columnTasks.findIndex((t) => t.id === activeId)
     
     // Logic for new position calculation
     // This is a simplified version. For true nested sorting we'd need more logic.
@@ -172,7 +172,7 @@ export function KanbanBoard({ initialTasks, projectId }: KanbanBoardProps) {
         toast.error(result.error)
         setTasks(initialTasks) // Revert on error
       }
-    } catch (error) {
+    } catch (_error) {
       toast.error("Failed to save task position")
       setTasks(initialTasks)
     }
@@ -186,7 +186,7 @@ export function KanbanBoard({ initialTasks, projectId }: KanbanBoardProps) {
       onDragOver={handleDragOver}
       onDragEnd={handleDragEnd}
     >
-      <div className="flex gap-6 overflow-x-auto pb-4 h-full min-h-[600px] items-start">
+      <div className="grid grid-cols-4 gap-3 p-4 h-[calc(100vh-120px)]">
         {COLUMNS.map((status) => (
           <KanbanColumn
             key={status}

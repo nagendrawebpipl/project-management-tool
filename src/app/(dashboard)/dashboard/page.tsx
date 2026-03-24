@@ -12,18 +12,19 @@ import { RecentActivityWidget } from "@/features/dashboard/components/recent-act
 import { OverdueTasksWidget } from "@/features/dashboard/components/overdue-tasks-widget"
 import { Briefcase, CheckCircle2, AlertCircle, Clock } from "lucide-react"
 import { Card } from "@/components/ui/card"
-import { Button, buttonVariants } from "@/components/ui/button"
+
+import { buttonVariants } from "@/components/ui/button-variants"
 import Link from "next/link"
 import { cn } from "@/lib/utils"
 
 export default async function DashboardPage() {
-  let currentStep = "Initializing";
+  let _currentStep = "Initializing";
   try {
-    currentStep = "Fetching Organization";
+    _currentStep = "Fetching Organization";
     const { organization } = await getCurrentOrganization()
     
-    currentStep = "Fetching User";
-    const user = await getAuthUser()
+    _currentStep = "Fetching User";
+    const _user = await getAuthUser()
 
     // Separate fetchers with safety catch for other widgets
     const safeFetch = async <T,>(promise: Promise<T>, fallback: T, name: string): Promise<T> => {
@@ -35,7 +36,7 @@ export default async function DashboardPage() {
       }
     };
 
-    currentStep = "Loading Dashboard Stats";
+    _currentStep = "Loading Dashboard Stats";
     const stats = await safeFetch(getDashboardStats(organization.id), {
       projectCount: 0,
       totalTasks: 0,
@@ -46,18 +47,18 @@ export default async function DashboardPage() {
       priorityCounts: { low: 0, medium: 0, high: 0, urgent: 0 }
     }, "DashboardStats");
 
-    currentStep = "Loading Overdue Tasks";
+    _currentStep = "Loading Overdue Tasks";
     const overdueTasks = await safeFetch(getOverdueTasks(organization.id), [], "OverdueTasks");
     
-    currentStep = "Loading Recent Activity";
+    _currentStep = "Loading Recent Activity";
     const activities = await safeFetch(getRecentActivity(organization.id, 10), [], "RecentActivity");
 
-    currentStep = "Rendering UI";
+    _currentStep = "Rendering UI";
     return (
       <div className="space-y-8 pb-10 max-w-7xl mx-auto">
         <div className="space-y-1">
           <p className="text-sm text-muted-foreground font-medium">
-            Here's an overview of what's happening across your team.
+            Here&apos;s an overview of what&apos;s happening across your team.
           </p>
         </div>
 

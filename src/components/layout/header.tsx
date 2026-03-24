@@ -13,7 +13,7 @@ import { Users } from "lucide-react"
 import { NotificationBell } from "@/features/notifications/components/notification-bell"
 import { ThemeToggle } from "@/components/shared/theme-toggle"
 import { MobileSidebar } from "./mobile-sidebar"
-import { Menu } from "lucide-react"
+
 
 export function Header() {
   const router = useRouter()

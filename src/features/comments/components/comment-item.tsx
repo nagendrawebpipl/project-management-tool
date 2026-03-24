@@ -29,7 +29,7 @@ export function CommentItem({ comment, currentUserId, projectId }: CommentItemPr
             } else {
                 toast.success("Comment deleted")
             }
-        } catch (error) {
+        } catch (_error) {
             toast.error("Failed to delete comment")
         } finally {
             setIsDeleting(false)

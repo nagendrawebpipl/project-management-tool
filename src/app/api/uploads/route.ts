@@ -33,11 +33,13 @@ export async function POST(req: NextRequest) {
     const safeName = file.name.replace(/[^a-zA-Z0-9.]/g, "_")
     const filePath = `org_${organization.id}/project_${projectId}/task_${taskId}/${timestamp}_${safeName}`
 
-    const { data: storageData, error: storageError } = await supabase.storage
+    const { error: storageError } = await supabase.storage
       .from("task-attachments")
       .upload(filePath, file)
 
-    if (storageError) throw new Error(storageError.message)
+    if (storageError) {
+      return NextResponse.json({ error: storageError.message }, { status: 500 })
+    }
 
     // Get public URL or just save path
     // We'll use the path and fetch signed URLs or similar if needed, 

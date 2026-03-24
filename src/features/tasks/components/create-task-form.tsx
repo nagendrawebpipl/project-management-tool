@@ -63,7 +63,7 @@ export function CreateTaskForm({ projectId, members, onSuccess }: CreateTaskDial
         router.refresh()
         onSuccess?.()
       }
-    } catch (error) {
+    } catch (_error) {
       toast.error("Something went wrong.")
     } finally {
       setIsPending(false)

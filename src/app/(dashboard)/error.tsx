@@ -23,7 +23,7 @@ export default function Error({
       <div className="text-center space-y-2">
         <h2 className="text-2xl font-bold tracking-tight">Something went wrong!</h2>
         <p className="text-muted-foreground max-w-md mx-auto">
-          We encountered an unexpected error. Don't worry, your data is safe. You can try refreshing the page or try again.
+          We encountered an unexpected error. Don&apos;t worry, your data is safe. You can try refreshing the page or try again.
         </p>
       </div>
       <div className="flex items-center gap-4 pt-4">

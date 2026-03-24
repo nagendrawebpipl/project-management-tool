@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useCallback } from "react"
 import {
   Sheet,
   SheetContent,
@@ -42,25 +42,19 @@ export function TaskDetailSheet({
   const [comments, setComments] = useState<any[]>([])
   const [attachments, setAttachments] = useState<any[]>([])
   const [activities, setActivities] = useState<any[]>([])
-  const [isLoading, setIsLoading] = useState(false)
+  const [_isLoading, setIsLoading] = useState(false)
   const [currentUserId, setCurrentUserId] = useState<string | null>(null)
 
   const supabase = createClient()
   useRealtimeComments(task?.id)
 
-  useEffect(() => {
-    if (open && task?.id) {
-      fetchDetails()
-      getCurrentUser()
-    }
-  }, [open, task?.id])
-
-  async function getCurrentUser() {
+  const getCurrentUser = useCallback(async () => {
     const { data } = await supabase.auth.getUser()
     setCurrentUserId(data.user?.id || null)
-  }
+  }, [supabase])
 
-  async function fetchDetails() {
+  const fetchDetails = useCallback(async () => {
+    if (!task?.id) return
     setIsLoading(true)
     try {
       const [commentsRes, attachmentsRes, activitiesRes] = await Promise.all([
@@ -89,7 +83,14 @@ export function TaskDetailSheet({
     } finally {
       setIsLoading(false)
     }
-  }
+  }, [supabase, task?.id])
+
+  useEffect(() => {
+    if (open && task?.id) {
+      fetchDetails()
+      getCurrentUser()
+    }
+  }, [open, task?.id, fetchDetails, getCurrentUser])
 
   if (!task) return null
 

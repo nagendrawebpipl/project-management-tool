@@ -12,7 +12,7 @@ export default function ProjectNotFound() {
         </div>
         <h2 className="mt-6 text-xl font-semibold">Project not found</h2>
         <p className="mb-8 mt-2 text-center text-sm font-normal leading-6 text-muted-foreground">
-          The project you are looking for doesn't exist or you don't have permission to view it.
+          The project you are looking for doesn&apos;t exist or you don&apos;t have permission to view it.
         </p>
         <Link href="/projects" passHref>
           <Button>Back to Projects</Button>

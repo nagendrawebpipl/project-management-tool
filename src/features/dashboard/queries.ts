@@ -3,44 +3,110 @@ import { createClient } from "@/lib/supabase/server"
 export async function getMyTasks(userId: string, orgId: string) {
   const supabase = await createClient()
 
-  const { data, error } = await supabase
-    .from("tasks")
-    .select(`
-      *,
-      projects (
-        name
-      )
-    `)
-    .eq("organization_id", orgId)
-    .eq("assignee_id", userId)
-    .neq("status", "done")
-    .order("due_date", { ascending: true, nullsFirst: false })
-    .limit(10)
+  try {
+    // Attempt join first
+    const { data: joinedData, error: joinError } = await supabase
+      .from("tasks")
+      .select(`
+        *,
+        projects (
+          name
+        )
+      `)
+      .eq("organization_id", orgId)
+      .eq("assignee_id", userId)
+      .neq("status", "done")
+      .order("due_date", { ascending: true, nullsFirst: false })
+      .limit(10)
 
-  if (error) throw new Error(error.message)
-  return data
+    if (!joinError) return joinedData
+
+    // Fallback if join fails
+    console.warn("getMyTasks join failed, attempting manual fetch:", joinError.message)
+    const { data: tasks, error: tasksError } = await supabase
+      .from("tasks")
+      .select("*")
+      .eq("organization_id", orgId)
+      .eq("assignee_id", userId)
+      .neq("status", "done")
+      .order("due_date", { ascending: true, nullsFirst: false })
+      .limit(10)
+
+    if (tasksError) throw tasksError
+
+    if (!tasks || tasks.length === 0) return []
+
+    const projectIds = Array.from(new Set((tasks as any[]).map(t => t.project_id)))
+    const { data: projects } = await supabase
+      .from("projects")
+      .select("id, name")
+      .in("id", projectIds)
+
+    const projectMap = new Map((projects || []).map(p => [(p as any).id, p]))
+
+    return (tasks as any[]).map(task => ({
+      ...task,
+      projects: projectMap.get(task.project_id) || null
+    }))
+  } catch (error: any) {
+    console.error("getMyTasks query error:", error)
+    return []
+  }
 }
 
 export async function getOverdueTasks(orgId: string) {
   const supabase = await createClient()
   const today = new Date().toISOString()
 
-  const { data, error } = await supabase
-    .from("tasks")
-    .select(`
-      *,
-      projects (
-        name
-      )
-    `)
-    .eq("organization_id", orgId)
-    .neq("status", "done")
-    .lt("due_date", today)
-    .order("due_date", { ascending: true })
-    .limit(10)
+  try {
+    // Attempt join first
+    const { data: joinedData, error: joinError } = await supabase
+      .from("tasks")
+      .select(`
+        *,
+        projects (
+          name
+        )
+      `)
+      .eq("organization_id", orgId)
+      .neq("status", "done")
+      .lt("due_date", today)
+      .order("due_date", { ascending: true })
+      .limit(10)
 
-  if (error) throw new Error(error.message)
-  return data
+    if (!joinError) return joinedData
+
+    // Fallback if join fails
+    console.warn("getOverdueTasks join failed, attempting manual fetch:", joinError.message)
+    const { data: tasks, error: tasksError } = await supabase
+      .from("tasks")
+      .select("*")
+      .eq("organization_id", orgId)
+      .neq("status", "done")
+      .lt("due_date", today)
+      .order("due_date", { ascending: true })
+      .limit(10)
+
+    if (tasksError) throw tasksError
+
+    if (!tasks || tasks.length === 0) return []
+
+    const projectIds = Array.from(new Set((tasks as any[]).map(t => t.project_id)))
+    const { data: projects } = await supabase
+      .from("projects")
+      .select("id, name")
+      .in("id", projectIds)
+
+    const projectMap = new Map((projects || []).map(p => [(p as any).id, p]))
+
+    return (tasks as any[]).map(task => ({
+      ...task,
+      projects: projectMap.get(task.project_id) || null
+    }))
+  } catch (error: any) {
+    console.error("getOverdueTasks query error:", error)
+    return []
+  }
 }
 
 export async function getTaskCountsByStatus(orgId: string) {
