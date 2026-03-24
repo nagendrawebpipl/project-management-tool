@@ -59,11 +59,39 @@ export async function getProject(id: string) {
 
 export async function getProjectMembers(projectId: string) {
   const supabase = await createClient()
-  const { data, error } = await supabase
-    .from("project_members")
-    .select("*, profile:profiles(*)")
-    .eq("project_id", projectId)
+  try {
+    // Attempt join first
+    const { data: joinedData, error: joinError } = await supabase
+      .from("project_members")
+      .select("*, profile:profiles(*)")
+      .eq("project_id", projectId)
 
-  if (error) throw error
-  return data
+    if (!joinError) return joinedData
+
+    // Fallback if join fails
+    console.warn("getProjectMembers join failed, attempting manual fetch:", joinError.message)
+    const { data: members, error: membersError } = await supabase
+      .from("project_members")
+      .select("*")
+      .eq("project_id", projectId)
+
+    if (membersError) throw membersError
+    if (!members || members.length === 0) return []
+
+    const userIds = Array.from(new Set((members as any[]).map(m => m.user_id)))
+    const { data: profiles } = await supabase
+      .from("profiles")
+      .select("*")
+      .in("id", userIds)
+
+    const profileMap = new Map((profiles || []).map(p => [(p as any).id, p]))
+
+    return (members as any[]).map(member => ({
+      ...member,
+      profile: profileMap.get(member.user_id) || null
+    }))
+  } catch (error: any) {
+    console.error("getProjectMembers query error details:", error)
+    return []
+  }
 }
